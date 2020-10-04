@@ -1,7 +1,5 @@
 const CustomError = require("../extensions/custom-error");
 
-const instructions = ['--discard-prev', '--double-prev', '--discard-next', '--double-next'];
-
 module.exports = function transform(arr) {
   if (!Array.isArray(arr)) {
     throw new Error(`${arr} is not a valid array!`);
@@ -11,9 +9,11 @@ module.exports = function transform(arr) {
     const direction = phrase.substr(phrase.length - 4);
     let result = array.slice();
     const index = array.indexOf(phrase);
-    direction === 'prev'
-    ? result[index - 1] = ''
-    : result[index + 1] = '';
+    if (direction === 'prev') {
+      result[index - 1] = '';
+    } else {
+      result[index + 1] = '';
+    }
     result[index] = '';
     return result;
   }
